@@ -2,20 +2,20 @@
 include 'EBApiClient.php';
 
 $apiConnect = 'https://iaabc.edubrite.com';
+$userName = 'iaabccourses';
 
 //First step is to get the session id,
 $init = EBApiClient::init();
 $session_id = $init['session_id'];
 
 //Next step is to login as the API user and get the session info
-$result = EBApiClient::connect($session_id);
-$session_info = $result['session_info'];
+$connection = EBApiClient::connect($session_id);
 
 //print($result['session_id'] . "\n");
 //print($result['session_info'] . "\n");
 //Now we can make calls to other APIs. Second parameter indicates the application user (effective user) which is making the API calls.
 
-$userList = EBApiClient::getUserList($result['session_id'], $result['session_info']);
+$userList = EBApiClient::getUserList( $connection, $userName );
 print_r($userList);
 
 //Create user session for user dev1,

@@ -21,17 +21,16 @@ class EBApiClient {
         return $result;
     }
 
-    public static function getUserList($session_id, $session_info) {
+    public static function getUserList($connection, $userName) {
         $parameters = array(
-            "dispatch" => "listPrograms",
-            'xml' => true,
+            "dispatch" => "list",
         );
-        $result  = EBCommon::call($session_id, $session_info, 'iaabccourses', 'catalogService.do', $parameters );
-        if($result['body'] != null){
+        $result = EBCommon::call($connection["session_id"], $connection["session_info"], $userName, "userService.do", $parameters);
+        if($result['body'] != null) {
             $xmlStr = $result['body'];
             //print($xmlStr);
-//            $simpleXml = simplexml_load_string($xmlStr);
-//            $attrs = $simpleXml->attributes();
+            $simpleXml = simplexml_load_string($xmlStr);
+            $attrs = $simpleXml->attributes();
             return $xmlStr;
         }
     }
